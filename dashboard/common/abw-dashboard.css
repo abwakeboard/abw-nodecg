@@ -14,7 +14,54 @@ label {
     color: #b7b7b7;
 }
 
+.vh-50 {
+    min-height: 300px;
+    height: 50vh;
+    overflow: auto;
+}
+
 .my-5 {
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+table img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #ffffff2c;
+}
+
+th,
+td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    /* color: #333; */
+    border-bottom: 2px solid #e0e0e02a;
+}
+
+td {
+    border-bottom: 1px solid #e0e0e02a;
+    /* color: #555; */
+}
+
+tr:hover {
+    background-color: #fafafa23;
 }

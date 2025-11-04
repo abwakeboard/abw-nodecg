@@ -34,7 +34,7 @@
             {
                 "name": "liveheats",
                 "title": "LiveHeats",
-                "width": 2,
+                "width": 4,
                 "file": "liveheats/liveheats.html",
                 "headerColor": "#525F78"
             }

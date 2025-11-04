@@ -138,6 +138,7 @@ function formatSchedule(apiRes) {
                     nome: competitor.athlete.name,
                     id: competitor.athlete.id,
                     foto: competitor.athlete.image || `/assets/abw-nodecg/images/backupAtleta.png`,
+                    categoria: heat.eventDivision.division.name,
                     heat: heatName,
                     idade: getAge(competitor.athlete.dob, ``)
                 });
