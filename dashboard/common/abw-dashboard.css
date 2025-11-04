@@ -1,0 +1,20 @@
+input,
+select {
+    box-sizing: border-box;
+    background-color: #3d4961;
+    border: solid 1px #232d3f;
+    border-radius: 6px;
+    padding: 0.2rem;
+    color: white;
+}
+
+label {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    color: #b7b7b7;
+}
+
+.my-5 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

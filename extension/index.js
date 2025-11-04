@@ -21,5 +21,7 @@ module.exports = (nodecg) => {
 };
 
 async function init() {
-    console.log(`foo`);
+    const { initLiveHeats } = require(`./modules/liveheats`);
+
+    initLiveHeats();
 }
