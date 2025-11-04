@@ -1,6 +1,9 @@
 
 const form = document.getElementById("formIdEvento");
 
+const scheduleRep = nodecg.Replicant('liveHeatsSchedule');
+const activeCompRep = nodecg.Replicant('liveHeatsActiveCompetitor');
+
 // lida com envio do formulário
 form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -24,25 +27,62 @@ nodecg.Replicant(`idLiveHeats`).on(`change`, (newValue) => {
     document.getElementById(`idLiveHeats`).value = newValue;
 });
 
-// popula a tabela com os dados do cronograma do liveheats
-nodecg.Replicant(`liveHeatsSchedule`).on(`change`, (newValue) => {
-    if (!newValue) return;
+// event listener global pra cliques na página
+document.addEventListener("click", (event) => {
+    // checa se uma linha na tabela de atletas foi clicada. 
+    const row = event.target.closest("#cronograma tbody tr");
 
-    const tabela = document.getElementById(`cronograma`).querySelector(`tbody`);
-    tabela.innerHTML = ``;
+    if (row) {
+        const rows = Array.from(document.querySelectorAll("#cronograma tbody tr"));
+        const index = rows.indexOf(row);
 
-    newValue.forEach((atleta, index) => {
+        nodecg.log.debug(`Linha clicada: ${index}`);
 
-        const row = `<tr abw-index="${index}">
-                        <td><img src='${atleta.foto}' /></td>
-                        <td>${atleta.nome}</td>
-                        <td>${atleta.categoria}</td>
-                        <td>${atleta.heat}</td>
-                        <td>${atleta.idade}</td>
-        </tr>`;
+        // atualiza UI: Adiciona class active à linha clicada
+        rows.forEach(row => {
+            row.classList.remove(`active`);
+        });
+        row.classList.add(`active`);
 
-        tabela.innerHTML += row;
+        // atualiza banco de dados:
+        activeCompRep.value = index;
+
+    }
+});
+
+
+NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
+    // popula a tabela com os dados do cronograma do liveheats
+    scheduleRep.on(`change`, (newValue) => {
+        if (!newValue) return;
+
+        const tabela = document.getElementById(`cronograma`).querySelector(`tbody`);
+        tabela.innerHTML = ``;
+
+        newValue.forEach((atleta, index) => {
+
+            nodecg.log.debug(index, activeCompRep.value);
+
+            const row = `<tr 
+                            class="${index === activeCompRep.value ? `active` : ``}"
+                            abw-index="${index}"
+                        >
+                            <td><img src='${atleta.foto}' /></td>
+                            <td>${atleta.nome}</td>
+                            <td>${atleta.categoria}</td>
+                            <td>${atleta.heat}</td>
+                            <td>${atleta.idade}</td>
+                        </tr>`;
+
+            tabela.innerHTML += row;
+
+        });
+
+        // scrolla pra linha ativa
+        tabela.querySelector('.active')?.scrollIntoView({
+            behavior: 'smooth', // or 'auto'
+            block: 'center',     // 'start', 'center', 'end', or 'nearest'
+        });
 
     });
-
 });
