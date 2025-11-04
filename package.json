@@ -39,7 +39,14 @@
                 "headerColor": "#525F78"
             }
         ],
-        "graphics": [],
+        "graphics": [
+            {
+                "file": "atleta/atleta.html",
+                "width": 1920,
+                "height": 1080,
+                "singleInstance": false
+            }
+        ],
         "assetCategories": [
             {
                 "name": "images",
