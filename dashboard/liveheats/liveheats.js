@@ -8,16 +8,24 @@ const activeCompRep = nodecg.Replicant('liveHeatsActiveCompetitor');
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    form.querySelector(`button`).innerText = `atualizando...`;
+
     const formData = new FormData(form);
     const formJSON = Object.fromEntries(formData.entries())
 
     if (!formJSON.idLiveHeats) {
         nodecg.log.warn(`você deve selecionar um ID`);
+        form.querySelector(`button`).innerText = `Pegar Ordem de Entrada`;
         return;
     }
 
     // nodecg.Replicant(`idLiveHeats`).value = formJSON.idLiveHeats;
-    nodecg.sendMessage(`liveHeatsFetchOrdemEntrada`, formJSON.idLiveHeats);
+    nodecg.sendMessage(`liveHeatsFetchOrdemEntrada`, formJSON.idLiveHeats).then(result => {
+        form.querySelector(`button`).innerText = `Pegar Ordem de Entrada`;
+    }).catch(error => {
+        nodecg.log.error(error);
+    });
+
 
 });
 

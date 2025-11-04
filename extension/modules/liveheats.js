@@ -8,18 +8,22 @@ const logNamespace = ":: [liveheats.js] :: ";
 function initLiveHeats() {
     nodecg.log.info(`${logNamespace} Iniciando...`);
 
-    nodecg.listenFor(`liveHeatsFetchOrdemEntrada`, (idLiveHeats) => {
+    nodecg.listenFor(`liveHeatsFetchOrdemEntrada`, async (idLiveHeats, ack) => {
         if (!idLiveHeats) {
             nodecg.log.warn(
                 `${logNamespace} Nenhum ID fornecido. Abortando...`,
             );
+            ack(new Error(`Nenhum ID fornecido.`));
             return;
         }
 
         // atualiza o ID do LiveHeats na UI da dashboard
         nodecg.Replicant(`idLiveHeats`).value = idLiveHeats;
         // roda a função que pega a ordem de entrada no liveheats
-        fetchOrdemEntrada(idLiveHeats);
+        await fetchOrdemEntrada(idLiveHeats);
+        if (ack && !ack.handled) {
+            ack(null, `ok`);
+        }
     });
 }
 
@@ -90,6 +94,7 @@ async function fetchOrdemEntrada(idLiveHeats) {
     // nodecg.log.info(formatted);
     nodecg.Replicant(`liveHeatsSchedule`).value = formatted;
     nodecg.log.info(`${logNamespace} Atualizado cronograma do LiveHeats pro replicant "liveHeatsSchedule"`);
+    return;
 }
 
 /** Essa função pega o resultado da query da API do LiveHeats e formata em um cronograma fácil de usar
@@ -98,7 +103,7 @@ async function fetchOrdemEntrada(idLiveHeats) {
 function formatSchedule(apiRes) {
     // confere se temos um cronograma na resposta da API
     if (
-        !apiRes.data.event.fullSchedule.podiums ||
+        !apiRes?.data?.event?.fullSchedule?.podiums ||
         !apiRes?.data?.event?.fullSchedule?.podiums.length
     ) {
         nodecg.log.error(
