@@ -1,7 +1,7 @@
 // copy me to `nodecg.js`and edit me
 module.exports = {
     host: "0.0.0.0",
-    port: 9090,
+    port: 9092,
     baseURL: "example.com",
     bundles: {
         disabled: ["example-bundle"],
