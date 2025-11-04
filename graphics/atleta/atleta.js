@@ -1,5 +1,6 @@
 const scheduleRep = nodecg.Replicant('liveHeatsSchedule');
 const activeCompRep = nodecg.Replicant('liveHeatsActiveCompetitor');
+const cssRep = nodecg.Replicant('liveHeatsCustomCSS');
 
 
 NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
@@ -9,6 +10,10 @@ NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
     // quando o atleta ativo trocar, atualiza a UI pra feedback
     activeCompRep.on(`change`, updateGraphic);
 
+});
+
+cssRep.on(`change`, (newValue) => {
+    document.getElementById(`customCSS`).textContent = newValue;
 });
 
 function updateGraphic() {

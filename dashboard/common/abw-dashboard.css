@@ -1,11 +1,17 @@
 input,
-select {
+select,
+textarea {
     box-sizing: border-box;
     background-color: #3d4961;
     border: solid 1px #232d3f;
     border-radius: 6px;
     padding: 0.2rem;
     color: white;
+}
+
+textarea {
+    min-width: 100%;
+    min-height: 200px;
 }
 
 label {
@@ -23,6 +29,18 @@ label {
 .my-5 {
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+.ms-auto {
+    margin-left: auto;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-none {
+    display: none;
 }
 
 table img {

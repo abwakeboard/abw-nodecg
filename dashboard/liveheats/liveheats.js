@@ -1,8 +1,10 @@
 
 const form = document.getElementById("formIdEvento");
+const formCSS = document.getElementById("formCSS");
 
 const scheduleRep = nodecg.Replicant('liveHeatsSchedule');
 const activeCompRep = nodecg.Replicant('liveHeatsActiveCompetitor');
+const cssRep = nodecg.Replicant(`liveHeatsCustomCSS`);
 
 // lida com envio do formulário
 form.addEventListener("submit", (event) => {
@@ -34,8 +36,6 @@ nodecg.Replicant(`idLiveHeats`).on(`change`, (newValue) => {
     if (!newValue) return;
     document.getElementById(`idLiveHeats`).value = newValue;
 });
-
-
 
 NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
     // popula a tabela com os dados do cronograma do liveheats
@@ -93,7 +93,6 @@ document.addEventListener("click", (event) => {
 
 });
 
-
 function setActiveCompAbs(event) {
     const row = event.target.closest("#cronograma tbody tr");
 
@@ -125,3 +124,29 @@ function setActiveCompRel(event) {
     // atualiza o valor do competidor ativo, mas só entre 0 e o número total de competidores
     activeCompRep.value = Math.min(Math.max(0, activeCompRep.value + parseInt(amount)), tableRows - 1);
 }
+
+// função pra abrir e fechar o customizador de CSS
+const toggleBtn = document.getElementById('toggle-css');
+if (toggleBtn) {
+    toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cssDiv = document.getElementById('custom-css');
+        if (!cssDiv) return;
+        cssDiv.classList.toggle('d-none');
+    });
+}
+
+// envio de CSS customizado
+formCSS.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(formCSS);
+    const formJSON = Object.fromEntries(formData.entries())
+
+    cssRep.value = formJSON.css;
+
+});
+
+cssRep.on(`change`, (newValue) => {
+    document.getElementById(`css`).value = newValue;
+});

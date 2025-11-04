@@ -1,0 +1,70 @@
+// valores padrão pros replicants
+
+const nodecgApiContext = require(`./nodecg-api-context`);
+const nodecg = nodecgApiContext.get();
+
+function initSeed() {
+
+    nodecg.Replicant('liveHeatsCustomCSS', {
+        defaultValue: `body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+#atleta {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+}
+
+#foto {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 90px;
+}
+
+#container-texto {
+    width: 100%;
+    padding-left: 100px;
+    padding-right: 30px;
+    background: #52a2dd;
+    color: white;
+    font-size: 22px;
+    position: relative;
+    left: -80px;
+    z-index: -1;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#contaner-atleta {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+}
+
+#nome {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+#container-categoria {
+    display: flex;
+    gap: 15px;
+}
+
+#heat {
+    font-weight: 700;
+}
+`
+    });
+
+}
+
+module.exports = { initSeed }
