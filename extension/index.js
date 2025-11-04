@@ -20,6 +20,6 @@ module.exports = (nodecg) => {
         });
 };
 
-async function init(nodecg) {
+async function init() {
     console.log(`foo`);
 }

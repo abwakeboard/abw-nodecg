@@ -1,9 +1,7 @@
 let context;
 
-module.exports.get = function () {
-    return context;
-};
+module.exports.get = () => context;
 
-module.exports.set = function (ctx) {
+module.exports.set = (ctx) => {
     context = ctx;
 };
