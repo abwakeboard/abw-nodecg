@@ -1,3 +1,9 @@
+# NodeCG
+cfg/nodecg.js
+db
+assets
+bundles
+
 # Logs
 logs
 *.log

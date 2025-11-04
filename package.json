@@ -1,0 +1,55 @@
+{
+    "dependencies": {
+        "nodecg": "^2.6.1"
+    },
+    "name": "abw-nodecg",
+    "description": "Sistema de gráficos pra Live da ABW usando NodeCG",
+    "version": "1.0.0",
+    "main": "index.js",
+    "devDependencies": {
+        "@biomejs/biome": "2.3.3",
+        "node-dev": "^8.0.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "npx nodecg start",
+        "dev": "npx node-dev -r dotenv/config ./node_modules/.bin/nodecg start",
+        "lint": "biome check",
+        "format": "biome format --write"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/abwakeboard/abw-nodecg.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/abwakeboard/abw-nodecg/issues"
+    },
+    "homepage": "https://github.com/abwakeboard/abw-nodecg#readme",
+    "nodecg": {
+        "compatibleRange": "^2.0.0",
+        "dashboardPanels": [
+            {
+                "name": "example",
+                "title": "Exemplo",
+                "width": 2,
+                "file": "example/example.html",
+                "headerColor": "#525F78"
+            }
+        ],
+        "graphics": [],
+        "assetCategories": [
+            {
+                "name": "images",
+                "title": "Imagens",
+                "allowedTypes": [
+                    "jpg",
+                    "jpeg",
+                    "png",
+                    "webp"
+                ]
+            }
+        ]
+    }
+}
