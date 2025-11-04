@@ -43,7 +43,6 @@ NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
 
             const row = `<tr 
                             class="${index === activeCompRep.value ? `active` : ``}"
-                            abw-index="${index}"
                         >
                             <td><img src='${atleta.foto}' /></td>
                             <td>${atleta.nome}</td>
@@ -56,13 +55,26 @@ NodeCG.waitForReplicants(scheduleRep, activeCompRep).then(() => {
 
         });
 
-        // scrolla pra linha ativa
-        tabela.querySelector('.active')?.scrollIntoView({
-            behavior: 'smooth', // or 'auto'
-            block: 'center',     // 'start', 'center', 'end', or 'nearest'
+    });
+
+    // quando o atleta ativo trocar, atualiza a UI pra feedback
+    activeCompRep.on(`change`, (newValue) => {
+        const tableRows = document.querySelectorAll('#cronograma tbody tr');
+
+        tableRows.forEach((row, index) => {
+            if (index === newValue) {
+                row.classList.add(`active`);
+                row.scrollIntoView({
+                    behavior: 'smooth', // or 'auto'
+                    block: 'center',     // 'start', 'center', 'end', or 'nearest'
+                });
+            } else {
+                row.classList.remove(`active`);
+            }
         });
 
     });
+
 });
 
 // event listener global pra cliques na página
