@@ -9,16 +9,21 @@ function initLiveHeats() {
     nodecg.log.info(`${logNamespace} Iniciando...`);
 
     nodecg.listenFor(`liveHeatsFetchOrdemEntrada`, async (idLiveHeats, ack) => {
+
+
+
         if (!idLiveHeats) {
-            nodecg.log.warn(
-                `${logNamespace} Nenhum ID fornecido. Abortando...`,
-            );
-            ack(new Error(`Nenhum ID fornecido.`));
-            return;
+            nodecg.log.warn(`${logNamespace} Nenhum ID fornecido. Pegando do replicant...`);
+            if (!nodecg.Replicant(`idLiveHeats`).value) {
+                ack(new Error(`Nenhum ID fornecido.`));
+                return;
+            }
+            idLiveHeats = nodecg.Replicant(`idLiveHeats`).value;
+        } else {
+            // atualiza o ID do LiveHeats na UI da dashboard
+            nodecg.Replicant(`idLiveHeats`).value = idLiveHeats;
         }
 
-        // atualiza o ID do LiveHeats na UI da dashboard
-        nodecg.Replicant(`idLiveHeats`).value = idLiveHeats;
         // roda a função que pega a ordem de entrada no liveheats
         await fetchOrdemEntrada(idLiveHeats);
         if (ack && !ack.handled) {
