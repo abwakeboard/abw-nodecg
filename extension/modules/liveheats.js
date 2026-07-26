@@ -54,7 +54,6 @@ async function fetchOrdemEntrada(idLiveHeats) {
                                                 name
                                                 id
                                                 image
-                                                dob
                                             }
                                         }
                                         eventDivision {
